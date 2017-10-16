@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" class="feedback">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>反馈建议</title>
+		<link rel="stylesheet" type="text/css" href="css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/feedback.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<button id="submit" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" >发送</button>
+			<h1 class="mui-title">反馈建议</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<p>功能调试中，暂无法使用</p>
+				<p>您的留言将提交到软件作者个人网站的留言板，您可以登录yuanyuanzijin.com查看</p>
+				<div class="mui-inline">建议与反馈</div>
+			</div>
+			<div class="row mui-input-row">
+				<textarea id='question' name="content" class="mui-input-clear question" placeholder="我们将认真考虑您的建议"></textarea>
+			</div>
+			<p>昵称</p>
+			<div class="mui-input-row">
+				<input id='nickname' type="text" name="nickname" class="mui-input-clear contact" placeholder="您怎么称呼？" />
+			</div>
+			<p>邮箱</p>
+			<div class="mui-input-row">
+				<input id='email' type="text" name="email" class="mui-input-clear contact" placeholder="当您的留言被回复时，此邮箱将收到通知" />
+			</div>
+
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/feedback.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui('.mui-scroll-wrapper').scroll();
+		</script>
+	</body>
+
+</html>

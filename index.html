@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/mystyle.css" rel="stylesheet"/>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/send2.js"></script>
+    <script type="text/javascript" src="js/watch2.js"></script>
+    <script type="text/javascript" src="js/set.js"></script>
+
+
+    <script type="text/javascript" charset="utf-8">
+    
+      	mui.init({
+      		gestureConfig:[{
+			   tap: true, //默认为true
+		//	   doubletap: true, //默认为false
+		//	   longtap: true, //默认为false
+		//	   swipe: true, //默认为true
+		//	   drag: true, //默认为true
+		//	   hold:true,//默认为false，不监听
+		//	   release:true//默认为false，不监听
+			}]
+      	});  
+      	
+    var first = null;
+    mui.back = function() {
+      //首次按键，提示‘再按一次退出应用’
+      if (!first) {
+        first = new Date().getTime();
+        mui.toast('再按一次退出智能小车');
+        setTimeout(function() {
+          first = null;
+        }, 1000);
+      } else {
+        if (new Date().getTime() - first < 1000) {
+          plus.runtime.quit();
+        }
+      }
+    }
+  	
+ 
+		var aid = null;
+		var modea = '0';	//停止0 前进1 后退2
+		var modeb = '5';	//前方5 左转4 右转6
+		var modec = '0';	//油门大小级别 1 2 3
+		var moded = '0';	//转弯大小级别 1 2
+		
+		var modea_old = '0';
+		var modeb_old = '5';
+		var modec_old = '0';
+		var moded_old = '0';
+		
+		var oldcontent = '';
+		var controlmode = '0';
+		var connectstatus = '0';
+	
+		function ganying(){
+			document.getElementById('open').style.backgroundColor = "mediumpurple";
+			document.getElementById('open').style.color = "white";
+			document.getElementById('close').style.backgroundColor = "white";
+			document.getElementById('close').style.color = "dimgrey";
+			document.getElementById("hand").style.display = "block";
+			document.getElementById("key").style.display = "none";			
+		}
+		
+		function anjian(){
+			if(controlmode == '1'){
+				watchStop();
+			}
+			
+			var readybutton = document.getElementById("ready");
+			readybutton.innerHTML = "开始";
+			readybutton.style.backgroundColor = "mediumpurple";
+						
+			var elements = document.getElementsByClassName('allspan');
+			for(var i = 0; i < elements.length; i++){
+				 elements[i].style.backgroundColor = 'lightgrey';
+			}
+			var elements = document.getElementsByClassName('allspanm');
+			for(var j = 0; j < elements.length; j++){
+			    elements[j].style.backgroundColor = 'darkgrey';
+			}
+			var elements = document.getElementsByClassName('allspana');
+			for(var k = 0; k < elements.length; k++){
+				elements[k].style.backgroundColor = 'transparent';
+			}
+			document.getElementById('open').style.backgroundColor = "white";
+			document.getElementById('open').style.color = "dimgrey";
+			document.getElementById('close').style.backgroundColor = "orange";
+			document.getElementById('close').style.color = "white";
+			document.getElementById("hand").style.display = "none";
+			document.getElementById("key").style.display = "block";
+		}
+
+	</script>
+	<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
+</head>
+
+<body>
+	<header id="muititle" class="mui-bar mui-bar-nav">
+	    <h1 id="title" class="mui-title">智能小车</h1>
+	</header>
+	
+<div class="mui-content">
+	<div id="tabble"  class="mui-control-content mui-active">
+		<div class="ble">
+			<br />
+			<p>您可以在更多-设置中设定是否自动连接</p>
+			<div id="bt0">请确保手机蓝牙已经打开<br />且智能小车蓝牙指示灯快速闪烁</div>
+			
+		    <input id="bt1" type="button" value="开启智能之旅" onclick="searchDevices('98:D3:33:80:B9:6E')" />
+			<input id="bt2" type="button" value="断开连接" onclick="closeconnect()" />
+			
+			<div id="daoyan" class="daoyan" >
+	        	<p>已配对蓝牙设备</p>
+	            <ul id="list2" class="mui-table-view"></ul>
+	        	<p>未配对蓝牙设备</p>
+	            <ul id="list1" class="mui-table-view"></ul>
+	       </div>
+		</div>
+	</div>
+	
+	<div id="tabcontrol" class="mui-control-content">
+		<div id="dcontent" class="dcontent">
+			<div id="status">蓝牙状态：未连接</div>
+			<ul class="dlist">
+	            <li class="ditem" id="close" onclick="anjian()">按键控制</li>
+				<li class="ditem" id="open" onclick="ganying()">重力感应 </li>
+			</ul>
+		</div>
+		
+		<div id="hand" class="hand">
+			<br />
+			<div>使用方法：将手机横过来，听筒在左侧，像使用方向盘一样</div>
+			<button id="ready" class="ready">开始</button>
+			<script>
+				mui('.hand').on('tap','button',function(){
+				  	if(controlmode == '0'){
+				  		if (connectstatus == '1') {
+				  			var readybutton = document.getElementById("ready");
+							readybutton.innerHTML = "暂停";
+							readybutton.style.backgroundColor = "dodgerblue";
+							watchAcc();
+						}else{
+							mui.toast("您还没有连接蓝牙哦~");
+						}
+				  	}else{
+				  		var readybutton = document.getElementById("ready");
+						readybutton.innerHTML = "开始";
+						readybutton.style.backgroundColor = "mediumpurple";
+						
+						var elements = document.getElementsByClassName('allspan');
+						for(var i = 0; i < elements.length; i++){
+						    elements[i].style.backgroundColor = 'lightgrey';
+						}
+						var elements = document.getElementsByClassName('allspanm');
+						for(var j = 0; j < elements.length; j++){
+						    elements[j].style.backgroundColor = 'darkgrey';
+						}
+						var elements = document.getElementsByClassName('allspana');
+						for(var k = 0; k < elements.length; k++){
+						    elements[k].style.backgroundColor = 'transparent';
+						}
+						watchStop();
+				  	}
+				  	
+				}) 
+			</script>
+			<div id="dh">
+				<span id="dhB" class="allspan">B</span><span id="dhC" class="allspanm">C</span><span id="dhD" class="allspan">D</span><br />
+				<span id="dhe" class="allspan">e</span><span id="dhE" class="allspan">E</span><span id="dhF" class="allspanm">F</span><span id="dhG" class="allspan">G</span><span id="dhg" class="allspan">g</span><br />
+				<span id="dhh" class="allspan">h</span><span id="dhH" class="allspan">H</span><span id="dhI" class="allspanm">I</span><span id="dhJ" class="allspan">J</span><span id="dhj" class="allspan">j</span><br />
+				<span id="dhA" class="allspana">A</span><br />
+				<span id="dhk" class="allspan">k</span><span id="dhK" class="allspan">K</span><span id="dhL" class="allspanm">L</span><span id="dhM" class="allspan">M</span><span id="dhm" class="allspan">m</span><br />
+				<span id="dhn" class="allspan">n</span><span id="dhN" class="allspan">N</span><span id="dhO" class="allspanm">O</span><span id="dhP" class="allspan">P</span><span id="dhp" class="allspan">p</span><br />
+				<span id="dhQ" class="allspan">Q</span><span id="dhR" class="allspanm">R</span><span id="dhS" class="allspan">S</span>
+			</div>
+
+		</div>
+		
+		<div id="key" class="key">
+			<button id="buttonleftf" ble="E">左前</button>
+			<button id="buttonforword" ble="F">前进</button>
+			<button id="buttonrightf" ble="G">右前</button><br />
+			<button id="buttonstop" ble="A">停止</button><br />
+			<button id="buttonleftb" ble="N">左后</button>
+			<button id="buttonback" ble="O">后退</button>
+			<button id="buttonrightb" ble="P">右后</button>
+		</div>
+	</div>
+	
+	<script>
+		mui('.key').on('release','button',function(){
+			console.log("您释放了按键");
+			sendinstruct("A");
+		}) 
+		mui('.key').on('tap','button',function(){
+			if (connectstatus == '1') {
+				var ble0 = this.getAttribute("ble");
+				console.log("您按住了按键");
+				sendinstruct(ble0);
+			}else{
+				mui.toast("您还没有连接蓝牙哦~");
+			}
+		  
+		});
+
+	</script>
+
+	<div id="tabmore" class="mui-control-content">
+			<br />
+			<p>&nbsp;&nbsp;&nbsp;介绍</p>
+			<ul class="mui-table-view">
+		        <li class="mui-table-view-cell">
+		            <a class="mui-navigate-right">
+		                使用方法(附视频)*
+		            </a>
+		        </li>
+		        <li class="mui-table-view-cell">
+		            <a class="mui-navigate-right">
+		                项目开发历程及接入指南*
+		            </a>
+		        </li>
+		    </ul>
+			<br />
+			<p>&nbsp;&nbsp;&nbsp;设置</p>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+		            <a class="mui-navigate">
+		               	发现小车自动连接
+		            </a>
+		            <div class="mui-switch" id="set1">
+		              <div class="mui-switch-handle"></div>
+		            </div>
+		        </li>
+		        <li class="mui-table-view-cell">
+		            <a class="mui-navigate">
+		               	重力感应语音提示
+		            </a>
+		            <div class="mui-switch" id="set2">
+		              <div class="mui-switch-handle"></div>
+		            </div>
+		        </li>
+		        <li class="mui-table-view-cell">
+		            <a class="mui-navigate">
+		               	重力感应震动提示
+		            </a>
+		            <div class="mui-switch" id="set3">
+		              <div class="mui-switch-handle" ></div>
+		            </div>
+		        </li>
+		    </ul>
+		    <br />
+			<p>&nbsp;&nbsp;&nbsp;其他</p>
+			<ul class="mui-table-view">
+
+		        <li class="mui-table-view-cell">
+		            <a id="aboutauthor" class="mui-navigate-right">
+		                 关于作者
+		            </a>
+		        </li>
+		        <li class="mui-table-view-cell">
+		            <a id="version" class="mui-navigate-right">
+		                 关于智能小车
+		            </a>
+		                 <script>
+		                 mui.plusReady(function () {
+		                 	plus.runtime.getProperty(plus.runtime.appid,function(inf){
+        						Ver=inf.version;
+        						console.log("当前应用版本："+Ver);
+		                    document.getElementById('version').innerHTML = "关于智能小车 V"+Ver;
+		                  })
+		                 })
+		                 </script>
+		            
+		        </li>
+		    </ul>
+	</div>
+
+
+	<div id="output"></div>
+</div>	
+
+
+	<nav class="mui-bar mui-bar-tab">
+	    <a class="mui-tab-item mui-active" id="tab1" href="#tabble" settitle="智能小车">
+	        <span class="mui-icon mui-icon-gear"></span>
+	        <span class="mui-tab-label">蓝牙连接</span>
+	    </a>
+	    <a class="mui-tab-item" href="#tabcontrol" id="tab2" settitle="遥控">
+	        <span class="mui-icon mui-icon-navigate"></span>
+	        <span class="mui-tab-label">遥控</span>
+	    </a>
+	    <a class="mui-tab-item" href="#tabmore" id="tab3" settitle="更多">
+	        <span class="mui-icon mui-icon-more"></span>
+	        <span class="mui-tab-label">更多</span>
+	    </a>
+	</nav>
+	
+	<script>
+//		mui('#tab1').on('tap','span',function(){
+//		  	document.getElementById("title").innerHTML = "智能小车";
+//		})
+//		mui('#tab2').on('tap','span',function(){
+//		  	document.getElementById("title").innerHTML = "遥控";
+//		})
+//		mui('#tab3').on('tap','span',function(){
+//		  	document.getElementById("title").innerHTML = "更多";
+//		})
+		
+		
+	    document.getElementById('version').addEventListener('tap', function() {
+	    	mui.openWindow({
+    		url: "update.html", 
+    		id: "update.html", 
+    		styles:{
+        		top:'0px',//子页面顶部位置
+        		bottom:'0px',//子页面底部位置
+        		width:'100%',//子页面宽度，默认为100%
+        		height:'100%',//子页面高度，默认为100%
+     		 },
+      		extras:{},//额外扩展参数
+      		createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+    		show:{
+      			autoShow:true,//页面loaded事件发生后自动显示，默认为true
+      			//aniShow:sliderActionLeft ,//页面显示动画，默认为”slide-in-right“；
+      			duration:'100ms'//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+   			},
+    		waiting:{
+      			autoShow:false,//自动显示等待框，默认为true
+      			//title:'正在加载...',//等待对话框上显示的提示内容
+      			options:{
+        			width:'80px',//等待框背景区域宽度，默认根据内容自动计算合适宽度
+        			height:'60px',//等待框背景区域高度，默认根据内容自动计算合适高度
+  				}}
+    		})
+    	})
+	    
+	    document.getElementById('aboutauthor').addEventListener('tap', function() {
+	    	mui.openWindow({
+    		url: "aboutauthor.html", 
+    		id: "aboutauthor.html", 
+    		styles:{
+        		top:'0px',//子页面顶部位置
+        		bottom:'0px',//子页面底部位置
+        		width:'100%',//子页面宽度，默认为100%
+        		height:'100%',//子页面高度，默认为100%
+     		 },
+      		extras:{},//额外扩展参数
+      		createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+    		show:{
+      			autoShow:true,//页面loaded事件发生后自动显示，默认为true
+      			//aniShow:sliderActionLeft ,//页面显示动画，默认为”slide-in-right“；
+      			duration:'100ms'//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+   			},
+    		waiting:{
+      			autoShow:false,//自动显示等待框，默认为true
+      			//title:'正在加载...',//等待对话框上显示的提示内容
+      			options:{
+        			width:'80px',//等待框背景区域宽度，默认根据内容自动计算合适宽度
+        			height:'60px',//等待框背景区域高度，默认根据内容自动计算合适高度
+  				}}
+    		})
+    	})
+	</script>
+
+</body>
+	<script type="text/javascript" src="js/immersed.js" ></script>
+	<script type="text/javascript" src="js/ble2.js"></script>
+</html>

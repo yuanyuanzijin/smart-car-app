@@ -1,0 +1,172 @@
+#muititle{
+	padding-top: 20px;
+	background-color: lightseagreen;
+	height: 70px;
+}
+.mui-title{
+	color: white;
+	line-height: 60px;
+	font-size: 20px;
+}
+
+#dh{
+	-webkit-transform: rotate(90deg);
+	text-align: center;
+	border: 1px dotted purple;
+	width: 300px;
+	height: 240px;
+	position: relative;
+	top: -20px;
+	left: 70px;
+}
+
+.allspan{
+	background-color: lightgrey;
+	display: inline-block;
+	width: 50px;
+	height: 30px;
+	color: white;
+	border: 0px solid mediumpurple;
+}
+.allspanm{
+	background-color: darkgrey;
+	display: inline-block;
+	width: 80px;
+	height: 30px;
+	color: white;
+}
+.allspana{
+	background-color: transparent;
+	display: inline-block;
+	line-height: 40px;
+	width: 280px;
+	height: 40px;
+	color: dimgrey;
+	border: 0px solid mediumpurple;
+}
+
+#output{
+	display: none;
+}
+.dcontent{
+	height: 180px;
+	margin-top: -30px;
+}
+.key{
+	text-align: center;
+	margin-top: 50px;
+	padding: 5px;
+}
+.key button{
+	font-size: 22px;
+	width: 95px;
+	height: 80px;
+	margin: 2px;
+	background-color: lightseagreen;
+	border: 0px;
+	color: white;
+	border-radius: 25px;
+}
+
+#bt0{
+	display: none;
+}
+#bt1{
+	top: 200px;
+	width: 300px;
+	height: 50px;
+	background-color: lightseagreen;
+	border: 0px;
+	font-size: 20px;
+	color: white;
+}
+
+#bt2{
+	width: 300px;
+	height: 50px;
+	top: 150px;
+	margin-top: 10px;
+	background-color: white;
+	border: 0px;
+	font-size: 20px;
+	color: dimgrey;
+	display: none;
+}
+
+.hand{
+	display: none;
+}
+#close{
+	background-color: orange;
+	color: white;
+	font-size: 18px;
+	padding: 16px;
+}
+#open{
+	font-size: 18px;
+	padding: 16px;
+}
+.ble{
+	padding: 20px;
+	margin: 5px;
+	text-align: center;
+}
+.daoyan{
+	clear: both;
+	text-align: left;
+	display: none;
+	width: 100%;
+	height: 300px;
+	margin: 0px;
+	font-size: 20px;
+	text-decoration: none;
+	margin-top: 50px;
+	background-color: lightgrey;
+}
+.daoyan p{
+	padding: 10px;
+	font-size: 20px;
+	color: dimgrey;
+	border: 0px;
+}
+.daoyan .mui-table-view{
+	background-color: transparent;
+	border: 0px;
+}
+.daoyan .mui-table-view li{
+	font-size: 20px;
+	width: 100%;
+	height: 50px;
+	padding: 15px;
+	margin-top: 5px;
+	background-color: white;
+}
+
+#buttonleftf,#buttonrightf{
+	top: 40px;
+}
+#buttonleftb,#buttonrightb{
+	top: -20px;
+}
+#buttonstop{
+	border-radius: 100px;
+	height: 80px;
+	background-color: orange;
+}
+.ready{
+	width: 150px;
+	height: 60px;
+	background-color: mediumpurple;
+	border: 0px;
+	color: white;
+	font-size: 20px;
+	transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	position: relative;
+	top: 130px;
+	left: -10px;
+}
+.history{
+	text-align: center;
+	margin: 20px;
+}

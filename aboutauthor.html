@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="js/mui.min.js"></script>
+	</head>
+
+	<body>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			var header = document.getElementById("header");
+//			//左侧icon
+//			var lefticon = document.createElement('a');
+//			lefticon.className = 'mui-action-back mui-icon mui-icon-left-nav mui-pull-left';
+//			//左侧图标+文字按钮
+//			var leftbtn = document.createElement('button');
+//			leftbtn.className = 'mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left';
+//			var span = document.createElement('span');
+//			span.className = 'mui-icon mui-icon-left-nav';
+//			leftbtn.appendChild(span);
+//			var text = document.createTextNode('首页');
+//			leftbtn.appendChild(text);
+//			//右侧icon
+//			var righticon = document.createElement('a');
+//			righticon.className = 'mui-icon mui-icon-bars mui-pull-right';
+//			//右侧文字按钮
+//			var rightbtn = document.createElement('button');
+//			rightbtn.className = 'mui-btn mui-btn-blue mui-btn-link mui-pull-right';
+//			rightbtn.innerText = '编辑';
+//			//删除原先存在的节点
+//			function remove(selector) {
+//				var elem = header.querySelector(selector);
+//				if (elem) {
+//					header.removeChild(elem);
+//				}
+//			};
+			var transparentApi;
+			var slider = document.getElementById("slider");
+			mui('.mui-input-group').on('change', 'input', function() {
+				if (this.checked) {
+					switch (this.value) {
+						case 'left-none':
+//							remove('.mui-pull-left');
+							document.getElementById("img1").className = "";
+							document.getElementById("slider").classList.add("mui-hidden");
+							break;
+						case 'left-icon':
+							document.getElementById("img1").className = "mui-hidden";
+							if(slider.classList.contains("mui-hidden")){
+								document.getElementById("slider").classList.remove("mui-hidden");
+							}
+							break;
+//						case 'left-btn':
+//							remove('.mui-pull-left');
+//							header.appendChild(leftbtn);
+//							break;
+//						case 'right-none':
+//							remove('.mui-pull-right');
+//							break;
+//						case 'right-icon':
+//							remove('.mui-pull-right')
+//							header.appendChild(righticon);
+//							break;
+//						case 'right-btn':
+//							remove('.mui-pull-right');
+//							header.appendChild(rightbtn);
+//							break;
+//						case 'transparent':
+//							header.className = 'mui-bar mui-bar-transparent';
+//							transparentApi = mui('.mui-bar-transparent').transparent();
+//							break;
+//						case 'nav':
+//							header.className = 'mui-bar mui-bar-nav';
+//							transparentApi && transparentApi.destory();
+//							break;
+					}
+				}
+			});
+		</script>
+		
+		<header id="header" class="mui-bar mui-bar-transparent">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 style="color: lightgrey;" class="mui-title">关于作者</h1>
+		</header>
+
+		<div class="mui-content">
+			<img width="100%" id="img1" src="media/me.jpg"/>
+			
+			<p style="margin: 35px 15px;">一个土生土长的大连人，一个爱运动爱音乐爱编程的阳光男孩儿。我叫金禄渊，现就读于大连理工大学，毕业于大连24中。</p>
+			<p style="margin: 35px 15px;">喜欢写歌，多次登上高中毕业典礼、学部迎新晚会的舞台；喜欢钢琴，喜欢即兴伴奏，10岁考完钢琴十级。</p>
+			<p style="margin: 35px 15px;">喜欢羽毛球，水平也还算可以，参加过大连理工大学羽毛球赛并获得双打第五名。</p>
+			<p style="margin: 35px 15px;">除此之外，我还喜欢编程，几个月前开始做了个小网站，也做过两三个小APP，学习时间不长，水平也一般，不过我挺喜欢的。</p>
+			<p style="margin: 35px 15px;">时间比较紧，暂时说这么多吧，最后留一下我的QQ号：703236269，有什么关于软件的问题或者其他想聊的都欢迎哦~
+		</div>
+	</body>
+
+</html>
